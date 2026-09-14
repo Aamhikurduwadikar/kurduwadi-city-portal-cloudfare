@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 150" role="img" aria-label="Kurduwadi City Portal logo">
+  <defs><linearGradient id="sun" x1="0" x2="1"><stop stop-color="#ff9f1c"/><stop offset="1" stop-color="#ff6b00"/></linearGradient></defs>
+  <rect width="520" height="150" rx="28" fill="#fff"/>
+  <circle cx="76" cy="66" r="45" fill="url(#sun)"/>
+  <path d="M32 112 Q76 83 120 112" fill="none" stroke="#1c9b5f" stroke-width="8"/>
+  <path d="M40 96h12V64h8v32h7V50h8v46h7V58h8v38h8V70h9v26h10" fill="#123f7a"/>
+  <path d="M75 41v-18h5v18" stroke="#123f7a" stroke-width="5"/>
+  <path d="M80 24h25l-13 9h-12z" fill="#ff6b00"/>
+  <text x="145" y="69" font-family="Arial, sans-serif" font-size="38" font-weight="800" fill="#123f7a">KURDUWADI</text>
+  <text x="147" y="105" font-family="Arial, sans-serif" font-size="29" font-weight="800" fill="#f36f21" letter-spacing="2">CITY PORTAL</text>
+  <text x="148" y="129" font-family="Arial, sans-serif" font-size="13" fill="#123f7a">आपले शहर • आपली माहिती • आपला डिजिटल प्लॅटफॉर्म</text>
+</svg>

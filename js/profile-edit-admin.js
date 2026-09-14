@@ -1,0 +1,14 @@
+(function(){
+'use strict';
+function esc(v){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+async function load(){
+ const sb=window.supabaseClient||((window.KURDUWADI_CONFIG&&window.supabase)?window.supabase.createClient(window.KURDUWADI_CONFIG.SUPABASE_URL,window.KURDUWADI_CONFIG.SUPABASE_ANON_KEY):null);if(!sb)return;
+ const dash=document.getElementById('dashboard');if(!dash||dash.hidden)return;
+ let box=document.getElementById('profileEditRequests');if(!box){const card=document.createElement('div');card.className='content-card';card.innerHTML='<h2>✏️ Profile बदल विनंत्या</h2><div id="profileEditRequests">लोड होत आहे...</div>';const grid=dash.querySelector('.admin-grid');grid?.prepend(card);box=card.querySelector('#profileEditRequests')}
+ const {data,error}=await sb.from('profile_edit_requests').select('*').eq('status','pending').order('created_at',{ascending:false});if(error){box.innerHTML='त्रुटी: '+esc(error.message);return}
+ box.innerHTML=data?.length?data.map(r=>{const c=r.requested_changes||{};const list=Object.entries(c).filter(([k])=>k!=='message').map(([k,v])=>`<div>• <b>${esc(k)}</b>: ${esc(Array.isArray(v)?v.join(', '):v)}</div>`).join('');return `<div class="admin-item" style="margin-bottom:10px"><b>👤 ${esc(r.name)}</b><br>📞 ${esc(r.phone||'-')}<div style="margin-top:8px">${list||''}${r.message?`<div>📝 ${esc(r.message)}</div>`:''}${r.photo_url?`<div>📷 नवीन फोटो<br><img src="${esc(r.photo_url)}" alt="नवीन फोटो" style="max-width:130px;border-radius:10px;margin-top:6px"></div>`:''}</div><div style="margin-top:9px"><button type="button" class="btn approve-profile-edit" data-id="${esc(r.id)}">✅ बदल मंजूर</button> <button type="button" class="btn reject-profile-edit" data-id="${esc(r.id)}">नकार</button></div></div>`}).join(''):'प्रलंबित profile बदल विनंत्या नाहीत.';
+}
+async function act(id,approve){const cfg=window.KURDUWADI_CONFIG,sb=window.supabase?.createClient(cfg.SUPABASE_URL,cfg.SUPABASE_ANON_KEY);if(!sb)return;if(!confirm(approve?'हा profile बदल मंजूर करायचा का?':'ही बदल विनंती नाकारायची का?'))return;const res=approve?await sb.rpc('approve_profile_edit_request',{request_id:id}):await sb.from('profile_edit_requests').update({status:'rejected',updated_at:new Date().toISOString()}).eq('id',id);if(res.error){alert('❌ '+res.error.message);return}alert(approve?'✅ Profile बदल लागू झाले.':'✅ विनंती नाकारली.');load()}
+document.addEventListener('click',e=>{const a=e.target.closest('.approve-profile-edit');if(a)act(a.dataset.id,true);const r=e.target.closest('.reject-profile-edit');if(r)act(r.dataset.id,false)});
+const observer=new MutationObserver(()=>{if(document.getElementById('dashboard')&&!document.getElementById('dashboard').hidden)setTimeout(load,150)});observer.observe(document.body,{childList:true,subtree:true});document.addEventListener('DOMContentLoaded',()=>setTimeout(load,1000));
+})();

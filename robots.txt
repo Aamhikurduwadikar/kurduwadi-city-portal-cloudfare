@@ -1,0 +1,6 @@
+# Kurduwadi City Portal robots.txt
+User-agent: *
+Allow: /
+Disallow: /admin/
+
+Sitemap: https://kurduwadi-city-portal.vercel.app/sitemap.xml

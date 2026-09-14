@@ -1,0 +1,12 @@
+/* Compact, clean personality cards — desktop + mobile */
+body.pride-premium #personalityGrid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important}
+body.pride-premium #personalityGrid .service-card{padding:10px!important;border-radius:14px!important;box-shadow:0 7px 20px rgba(28,42,55,.055)!important}
+body.pride-premium #personalityGrid .service-card>div:first-child{height:132px!important;margin:-1px -1px 8px!important;border-radius:9px!important}
+body.pride-premium #personalityGrid .service-card b{font-size:13px!important;line-height:1.3}
+body.pride-premium #personalityGrid .service-card small{font-size:9px!important;line-height:1.3}
+body.pride-premium #personalityGrid .service-card p{font-size:9px!important;line-height:1.4!important;margin:6px 0 0!important}
+body.pride-premium #personalityGrid .service-card .primary-btn,body.pride-premium #personalityGrid .service-card .outline-btn{padding:6px 8px!important;border-radius:7px!important;font-size:8px!important;line-height:1.2!important}
+body.pride-premium #personalityGrid .service-card .outline-btn{min-width:0!important}
+@media(max-width:1050px){body.pride-premium #personalityGrid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:900px){body.pride-premium #personalityGrid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:600px){body.pride-premium #personalityGrid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}body.pride-premium #personalityGrid .service-card{padding:8px!important;border-radius:12px!important}body.pride-premium #personalityGrid .service-card>div:first-child{height:112px!important;margin:-1px -1px 7px!important}body.pride-premium #personalityGrid .service-card b{font-size:11px!important}body.pride-premium #personalityGrid .service-card small{font-size:8px!important}body.pride-premium #personalityGrid .service-card p{display:none!important}body.pride-premium #personalityGrid .service-card .primary-btn,body.pride-premium #personalityGrid .service-card .outline-btn{padding:5px 6px!important;font-size:7px!important}}
