@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 
-Sitemap: https://kurduwadi-city-portal.vercel.app/sitemap.xml
+Sitemap: https://kurduwadi-city-portal-cloudfare.pramodraj9734.workers.dev/sitemap.xml
