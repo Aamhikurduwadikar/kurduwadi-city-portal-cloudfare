@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://kurduwadi-city-portal.vercel.app/</loc></url>
-  <url><loc>https://kurduwadi-city-portal.vercel.app/kurduwadi.html</loc></url>
-  <url><loc>https://kurduwadi-city-portal.vercel.app/news.html</loc></url>
-  <url><loc>https://kurduwadi-city-portal.vercel.app/events.html</loc></url>
-  <url><loc>https://kurduwadi-city-portal.vercel.app/directory.html</loc></url>
-  <url><loc>https://kurduwadi-city-portal.vercel.app/personalities.html</loc></url>
-  <url><loc>https://kurduwadi-city-portal.vercel.app/gallery.html</loc></url>
-  <url><loc>https://kurduwadi-city-portal.vercel.app/business-card.html</loc></url>
-  <url><loc>https://kurduwadi-city-portal.vercel.app/representatives.html</loc></url>
-  <url><loc>https://kurduwadi-city-portal.vercel.app/city-info.html</loc></url>
-  <url><loc>https://kurduwadi-city-portal.vercel.app/map.html</loc></url>
-  <url><loc>https://kurduwadi-city-portal.vercel.app/contact.html</loc></url>
-  <url><loc>https://kurduwadi-city-portal.vercel.app/privacy.html</loc></url>
+  <url><loc>https://kurduwadi-city-portal-cloudfare.pramodraj9734.workers.dev/</loc></url>
+  <url><loc>https://kurduwadi-city-portal-cloudfare.pramodraj9734.workers.dev/kurduwadi.html</loc></url>
+  <url><loc>https://kurduwadi-city-portal-cloudfare.pramodraj9734.workers.dev/news.html</loc></url>
+  <url><loc>https://kurduwadi-city-portal-cloudfare.pramodraj9734.workers.dev/events.html</loc></url>
+  <url><loc>https://kurduwadi-city-portal-cloudfare.pramodraj9734.workers.dev/directory.html</loc></url>
+  <url><loc>https://kurduwadi-city-portal-cloudfare.pramodraj9734.workers.dev/noticeboard.html</loc></url>
+  <url><loc>https://kurduwadi-city-portal-cloudfare.pramodraj9734.workers.dev/personalities.html</loc></url>
+  <url><loc>https://kurduwadi-city-portal-cloudfare.pramodraj9734.workers.dev/gallery.html</loc></url>
+  <url><loc>https://kurduwadi-city-portal-cloudfare.pramodraj9734.workers.dev/business-card.html</loc></url>
+  <url><loc>https://kurduwadi-city-portal-cloudfare.pramodraj9734.workers.dev/representatives.html</loc></url>
+  <url><loc>https://kurduwadi-city-portal-cloudfare.pramodraj9734.workers.dev/city-info.html</loc></url>
+  <url><loc>https://kurduwadi-city-portal-cloudfare.pramodraj9734.workers.dev/map.html</loc></url>
+  <url><loc>https://kurduwadi-city-portal-cloudfare.pramodraj9734.workers.dev/contact.html</loc></url>
+  <url><loc>https://kurduwadi-city-portal-cloudfare.pramodraj9734.workers.dev/privacy.html</loc></url>
 </urlset>
