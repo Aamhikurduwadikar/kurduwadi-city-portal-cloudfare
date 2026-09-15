@@ -1,6 +1,6 @@
 // Supabase public frontend configuration.
 // Only publishable/anon keys belong in browser code. NEVER put a service_role/secret key here.
-window.KURDUWADI_CONFIG={SUPABASE_URL:'https://rjfgfdgrqficffbyqvlf.supabase.co',SUPABASE_ANON_KEY:'sb_publishable_G3lGu7INXtIGmjum8nj7_A_opGtO3B2',STORAGE_BUCKET:'community-images',GA_MEASUREMENT_ID:'',SITE_NAME:'Kurduwadi City Portal',SITE_URL:'https://kurduwadi-city-portal.vercel.app/'};
+window.KURDUWADI_CONFIG={SUPABASE_URL:'https://rjfgfdgrqficffbyqvlf.supabase.co',SUPABASE_ANON_KEY:'sb_publishable_G3lGu7INXtIGmjum8nj7_A_opGtO3B2',STORAGE_BUCKET:'community-images',GA_MEASUREMENT_ID:'',SITE_NAME:'Kurduwadi City Portal',SITE_URL:'https://kurduwadi-city-portal-cloudfare.pramodraj9734.workers.dev/'};
 (function(){
  var path=location.pathname.toLowerCase(),home=/\/(index\.html)?$/.test(path),profile=path.endsWith('/profile.html'),reps=path.endsWith('/representatives.html'),admin=path.includes('/admin/');
  function css(id,href){if(!document.getElementById(id)){var l=document.createElement('link');l.id=id;l.rel='stylesheet';l.href=href;document.head.appendChild(l)}}
