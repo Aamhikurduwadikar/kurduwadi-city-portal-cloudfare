@@ -1,45 +1,13 @@
-(function(){
-'use strict';
-/* Single reliable moderation controls for citizen profiles + news. */
-const cfg=window.KURDUWADI_CONFIG||{};
-const db=(window.supabase&&cfg.SUPABASE_URL&&cfg.SUPABASE_ANON_KEY)?window.supabase.createClient(cfg.SUPABASE_URL,cfg.SUPABASE_ANON_KEY):null;
+(function(){'use strict';
+const cfg=window.KURDUWADI_CONFIG||{};const db=window.supabase&&cfg.SUPABASE_URL&&cfg.SUPABASE_ANON_KEY?window.supabase.createClient(cfg.SUPABASE_URL,cfg.SUPABASE_ANON_KEY):null;
 const esc=v=>String(v??'').replace(/[&<>\'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const btnStyle='display:inline-flex!important;visibility:visible!important;opacity:1!important;align-items:center;justify-content:center;min-height:44px!important;padding:10px 18px!important;margin:8px 8px 4px 0!important;border:0!important;border-radius:11px!important;font-weight:800!important;cursor:pointer!important;box-shadow:0 3px 8px rgba(0,0,0,.12)!important';
-function approvalButtons(table,id){return `<div class="approval-actions" style="margin-top:10px"><button type="button" data-approval-table="${esc(table)}" data-approval-id="${esc(id)}" data-approval-status="approved" style="${btnStyle};background:#087f5b!important;color:#fff!important">✅ मंजूर करा</button><button type="button" data-approval-table="${esc(table)}" data-approval-id="${esc(id)}" data-approval-status="rejected" style="${btnStyle};background:#b42318!important;color:#fff!important">❌ नकार</button><button type="button" data-approval-table="${esc(table)}" data-approval-id="${esc(id)}" data-approval-status="deleted" style="${btnStyle};background:#475569!important;color:#fff!important">🗑️ कायमचे Delete</button></div>`}
-async function moderate(table,id,status,button){
- if(!db){alert('❌ Supabase connection उपलब्ध नाही.');return}
- if(!id){alert('❌ Record ID मिळाला नाही.');return}
- const label=status==='approved'?'मंजूर':status==='rejected'?'नकार':'कायमचे Delete';
- if(!window.confirm(status==='deleted'?`ही ${table==='profiles'?'नागरिक प्रोफाइल':'बातमी'} कायमची delete करायची का? ही कृती परत करता येणार नाही.`:`ही ${table==='profiles'?'नागरिक प्रोफाइल':'बातमी'} ${label} करायची का?`))return;
- button.disabled=true;button.style.opacity='.65';
- try{
-   if(status==='deleted'){
-     const res=await db.from(table).delete().eq('id',id).select('id').maybeSingle();
-     if(res.error)throw res.error;
-     if(!res.data)throw new Error('नोंद delete झाली नाही.');
-   }else{
-     const patch=table==='profiles'?{status}:{status,published:status==='approved'};
-     const res=await db.from(table).update(patch).eq('id',id).select(table==='profiles'?'id,status':'id,status,published').maybeSingle();
-     if(res.error)throw res.error;
-     if(!res.data||res.data.status!==status)throw new Error('नोंद update झाली नाही.');
-   }
-   alert(`✅ ${label} यशस्वी.`);
-   if(typeof window.showDashboard==='function')await window.showDashboard();else location.reload();
- }catch(err){console.error('Admin moderation:',err);alert(`❌ ${label} अयशस्वी: ${err?.message||err}`);button.disabled=false;button.style.opacity='1'}
-}
-function inject(container,table){
- if(!container)return;
- container.querySelectorAll('.admin-item').forEach(item=>{
-   if(item.querySelector('.approval-actions'))return;
-   const existing=item.querySelector('button[data-table]');
-   const id=existing?.dataset?.id;
-   if(!id)return;
-   item.querySelectorAll('button[data-table]').forEach(b=>b.remove());
-   item.insertAdjacentHTML('beforeend',approvalButtons(table,id));
- });
-}
+function controls(table,id){return `<div class="approval-actions" style="margin-top:10px"><button type="button" data-approval-table="${esc(table)}" data-approval-id="${esc(id)}" data-approval-status="approved" style="${btnStyle};background:#087f5b!important;color:#fff!important">✅ मंजूर करा</button><button type="button" data-approval-table="${esc(table)}" data-approval-id="${esc(id)}" data-approval-status="rejected" style="${btnStyle};background:#b42318!important;color:#fff!important">❌ नकार</button><button type="button" data-approval-table="${esc(table)}" data-approval-id="${esc(id)}" data-approval-status="deleted" style="${btnStyle};background:#475569!important;color:#fff!important">🗑️ कायमचे Delete</button></div>`}
+async function moderate(table,id,status,b){if(!db){alert('❌ Supabase connection उपलब्ध नाही.');return}if(!id){alert('❌ Record ID मिळाला नाही.');return}const noun=table==='profiles'?'नागरिक प्रोफाइल':'बातमी';const label=status==='approved'?'मंजूर':status==='rejected'?'नकार':'कायमचे Delete';if(!confirm(status==='deleted'?`ही ${noun} कायमची delete करायची का? ही कृती परत करता येणार नाही.`:`ही ${noun} ${label} करायची का?`))return;b.disabled=true;try{if(status==='deleted'){const r=await db.from(table).delete().eq('id',id).select('id').maybeSingle();if(r.error)throw r.error;if(!r.data)throw Error('नोंद delete झाली नाही.')}else{const patch=table==='profiles'?{status}:{status,published:status==='approved'};const r=await db.from(table).update(patch).eq('id',id).select('id,status'+(table==='news'?',published':'')).maybeSingle();if(r.error)throw r.error;if(!r.data||r.data.status!==status)throw Error('नोंद update झाली नाही.')}alert(`✅ ${label} यशस्वी.`);if(typeof window.showDashboard==='function')await window.showDashboard();else location.reload()}catch(e){console.error(e);alert(`❌ ${label} अयशस्वी: ${e?.message||e}`);b.disabled=false}}
+function cleanOld(item){item.querySelectorAll('button').forEach(b=>{if(b.closest('.approval-actions'))return;const t=(b.textContent||'').replace(/\s+/g,' ').trim();if(t==='मंजूर'||t==='नकार'||t.includes('मंजूर करा')||t.includes('❌ नकार'))b.remove()})}
+function inject(container,table){if(!container)return;container.querySelectorAll('.admin-item').forEach(item=>{cleanOld(item);if(item.querySelector('.approval-actions'))return;const source=item.querySelector('[data-id]');const id=source?.dataset?.id;if(!id)return;item.insertAdjacentHTML('beforeend',controls(table,id))})}
 function run(){inject(document.getElementById('profiles'),'profiles');inject(document.getElementById('news'),'news')}
 document.addEventListener('click',e=>{const b=e.target.closest('button[data-approval-table]');if(b){e.preventDefault();e.stopPropagation();moderate(b.dataset.approvalTable,b.dataset.approvalId,b.dataset.approvalStatus,b)}});
-const start=()=>{run();['profiles','news'].forEach(id=>{const el=document.getElementById(id);if(el)new MutationObserver(run).observe(el,{childList:true,subtree:true})})};
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+function start(){run();['profiles','news'].forEach(id=>{const el=document.getElementById(id);if(el)new MutationObserver(run).observe(el,{childList:true,subtree:true})})}
+document.readyState==='loading'?document.addEventListener('DOMContentLoaded',start,{once:true}):start();
 })();
