@@ -1,6 +1,5 @@
-const CACHE='kurduwadi-static-v3';
+const CACHE='kurduwadi-static-v4';
 const ASSETS=['/','/css/style.css','/css/responsive-final.css','/css/mobile-bottom-nav.css','/js/site.js'];
-const LIVE_JS=/\/js\/(config|submit|profile|admin|admin-approval-fix)\.js$/;
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',e=>{
@@ -8,12 +7,9 @@ self.addEventListener('fetch',e=>{
   if(u.origin!==location.origin||e.request.method!=='GET')return;
   if(u.pathname.includes('/rest/')||u.pathname.includes('/auth/')||u.pathname.includes('/storage/'))return;
   const navigation=e.request.mode==='navigate'||e.request.destination==='document';
-  if(navigation){
-    e.respondWith(fetch(e.request).catch(()=>caches.match('/').then(r=>r||caches.match(e.request))));
-    return;
-  }
-  if(LIVE_JS.test(u.pathname)){
-    e.respondWith(fetch(e.request).then(res=>res).catch(()=>caches.match(e.request)));
+  const dynamic=/\/js\/(config|submit|profile|app|home-sections|home-updates-live|home-pride-live)\.js$/i.test(u.pathname);
+  if(navigation||dynamic){
+    e.respondWith(fetch(e.request).then(res=>{if(navigation&&res.ok){const copy=res.clone();caches.open(CACHE).then(c=>c.put(e.request,copy)).catch(()=>{});}return res;}).catch(()=>caches.match(e.request).then(r=>r||caches.match('/'))));
     return;
   }
   e.respondWith(caches.match(e.request).then(cached=>cached||fetch(e.request).then(res=>{
