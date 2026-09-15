@@ -23,7 +23,7 @@ window.KURDUWADI_CONFIG={SUPABASE_URL:'https://rjfgfdgrqficffbyqvlf.supabase.co'
  if(home){css('kpWorldPeopleLight','css/world-people-light.css');css('kpHeroRestore','css/hero-restore.css');css('kpPrideCompact','css/personalities-compact.css');js('js/site-enhancements.js');js('js/world-people.js');js('js/sidebar-cleanup.js');js('js/header-enhancement.js');js('js/final-home-trust-fix.js');js('js/home-pride-compact.js');js('js/home-pride-live.js');js('js/home-updates-live.js');js('js/city-services-home.js');js('js/perf-gallery.js');js('js/home-profiles-live.js');forceCitizenProfile();document.addEventListener('DOMContentLoaded',forceCitizenProfile);window.addEventListener('load',forceCitizenProfile);window.addEventListener('pageshow',forceCitizenProfile);new MutationObserver(forceCitizenProfile).observe(document.documentElement,{childList:true,subtree:true});}
  if(profile){css('kpProfileMobile','css/profile-mobile.css');js('js/portal-ui-fixes.js');js('js/profile-edit.js')}
  if(reps){js('js/representatives-instagram.js');js('js/portal-ui-fixes.js')}
- if(admin){js('js/work-fields-admin.js');js('js/profile-edit-admin.js');js('js/admin-super-control.js')}
+ if(admin){js('js/work-fields-admin.js');js('js/profile-edit-admin.js');js('js/admin-super-control.js');js('js/admin-domain-fix.js')}
  if(!admin)js('js/mobile-bottom-nav.js');
  if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js?portal=20260915-domain').catch(function(){});
 })();
