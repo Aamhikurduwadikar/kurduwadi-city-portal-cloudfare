@@ -1,5 +1,13 @@
 /js/config.js
   Cache-Control: no-cache, no-store, must-revalidate
+/js/admin.js
+  Cache-Control: no-cache, no-store, must-revalidate
+/js/admin-approval-fix.js
+  Cache-Control: no-cache, no-store, must-revalidate
+/js/submit.js
+  Cache-Control: no-cache, no-store, must-revalidate
+/js/profile.js
+  Cache-Control: no-cache, no-store, must-revalidate
 /css/*
   Cache-Control: public, max-age=31536000, immutable
 /js/*
