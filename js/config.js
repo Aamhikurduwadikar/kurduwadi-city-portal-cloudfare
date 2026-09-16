@@ -20,10 +20,14 @@ window.KURDUWADI_CONFIG={SUPABASE_URL:'https://rjfgfdgrqficffbyqvlf.supabase.co'
  applyCanonical();
  css('kpModernFonts','css/font-modern.css');css('kpResponsiveFinal','css/responsive-final.css');
  if(!admin)css('kpMobileBottomNavCss','css/mobile-bottom-nav.css');
- if(home){css('kpWorldPeopleLight','css/world-people-light.css');css('kpHeroRestore','css/hero-restore.css');css('kpPrideCompact','css/personalities-compact.css');js('js/site-enhancements.js');js('js/world-people.js');js('js/sidebar-cleanup.js');js('js/header-enhancement.js');js('js/final-home-trust-fix.js');js('js/home-pride-compact.js');js('js/home-pride-live.js?v=20260916');js('js/home-gallery-live.js?v=20260916');js('js/home-updates-live.js');js('js/city-services-home.js');js('js/perf-gallery.js');js('js/home-profiles-live.js');forceCitizenProfile();document.addEventListener('DOMContentLoaded',forceCitizenProfile);window.addEventListener('load',forceCitizenProfile);window.addEventListener('pageshow',forceCitizenProfile);new MutationObserver(forceCitizenProfile).observe(document.documentElement,{childList:true,subtree:true});}
+ if(home){css('kpWorldPeopleLight','css/world-people-light.css');css('kpHeroRestore','css/hero-restore.css');css('kpPrideCompact','css/personalities-compact.css');js('js/site-enhancements.js');js('js/world-people.js');js('js/sidebar-cleanup.js');js('js/header-enhancement.js');js('js/final-home-trust-fix.js');js('js/home-pride-compact.js');js('js/home-pride-live.js?v=20260916');js('js/home-gallery-live.js?v=20260916');js('js/home-updates-live.js');js('js/city-services-home.js');js('js/perf-gallery.js');js('js/home-profiles-live.js');forceCitizenProfile();}
  if(profile){css('kpProfileMobile','css/profile-mobile.css');js('js/portal-ui-fixes.js');js('js/profile-edit.js')}
  if(reps){js('js/representatives-instagram.js');js('js/portal-ui-fixes.js')}
  if(admin){js('js/work-fields-admin.js');js('js/profile-edit-admin.js');js('js/admin-super-control.js');js('js/admin-domain-fix.js')}
  if(!admin)js('js/mobile-bottom-nav.js');
+ if(home){
+   document.addEventListener('DOMContentLoaded',forceCitizenProfile,{once:true});
+   window.addEventListener('load',forceCitizenProfile,{once:true});
+ }
  if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js?portal=20260916-homefix').catch(function(){});
 })();
