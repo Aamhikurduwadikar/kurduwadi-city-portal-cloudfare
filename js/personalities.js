@@ -2,56 +2,8 @@ const {SUPABASE_URL,SUPABASE_ANON_KEY}=window.KURDUWADI_CONFIG;
 const db=window.supabase?.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 const grid=document.getElementById('personalityGrid');
 const esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
-
-const PERSONALITY_CATEGORIES=[
-  ['all','✨ सर्व'],['admin','🏛️ प्रशासकीय सेवा'],['engineering','⚙️ अभियांत्रिकी व तंत्रज्ञान'],
-  ['arts','🎭 कला व संस्कृती'],['law','⚖️ न्याय व विधी'],['health','🏥 वैद्यकीय व आरोग्यसेवा'],
-  ['agri','🌾 कृषी व कृषीउद्योजकता'],['police','👮 पोलीस व संरक्षण सेवा'],['education','🎓 शिक्षण व संशोधन'],
-  ['business','💼 व्यवसाय व उद्योग'],['sports','🏅 क्रीडा'],['social','🤝 सामाजिक कार्य व पत्रकारिता'],['politics','🏛️ राजकीय व लोकसेवा']
-];
-
-function categoryKey(field=''){
-  const s=String(field).toLowerCase().trim();
-  if(/प्रशास|administr|collector|tax|government service|शासकीय/.test(s)) return 'admin';
-  if(/अभियांत्र|engineer|technolog|technology|it |software|computer|तंत्रज्ञान/.test(s)) return 'engineering';
-  if(/कला|संस्कृ|artist|actor|साहित्य|संगीत|culture/.test(s)) return 'arts';
-  if(/न्याय|विधी|law|lawyer|advocate|वकील|न्यायाधीश/.test(s)) return 'law';
-  if(/वैद्यकीय|आरोग्य|medical|doctor|health|hospital|physician|nurse|डॉक्टर/.test(s)) return 'health';
-  if(/कृषी|शेतकरी|agri|farmer|farming|कृषीउद्योज|agro/.test(s)) return 'agri';
-  if(/पोलीस|police|army|military|defence|संरक्षण|लष्कर/.test(s)) return 'police';
-  if(/शिक्षण|teacher|professor|education|research|संशोधन|प्राध्यापक|शिक्षक/.test(s)) return 'education';
-  if(/व्यवसाय|उद्योग|business|industrial|entrepreneur|उद्योजक|व्यापारी/.test(s)) return 'business';
-  if(/क्रीडा|sport|खेळ|athlete|player/.test(s)) return 'sports';
-  if(/सामाजिक|पत्रकार|social|journal|media|समाजसेवा/.test(s)) return 'social';
-  if(/राजकीय|लोकसेवा|politic|mla|mp|आमदार|खासदार|नगराध्यक्ष/.test(s)) return 'politics';
-  return 'other';
-}
-
-function addFilterStyles(){
-  if(document.getElementById('personalityFilterStyles')) return;
-  const s=document.createElement('style');s.id='personalityFilterStyles';
-  s.textContent=`.personality-category-filter{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 14px;margin:-4px 0 18px;scrollbar-width:none}.personality-category-filter::-webkit-scrollbar{display:none}.pc-filter{flex:0 0 auto;border:1px solid #d8e1ee;background:#fff;color:#244a87;border-radius:999px;padding:9px 13px;font:600 13px/1.2 inherit;cursor:pointer;box-shadow:0 3px 10px rgba(25,55,95,.06)}.pc-filter.active{background:#244a87;color:#fff;border-color:#244a87}.pc-filter:active{transform:scale(.98)}@media(max-width:600px){.personality-category-filter{margin-left:-2px;margin-right:-2px;padding-bottom:12px}.pc-filter{font-size:12px;padding:8px 11px}}`;
-  document.head.appendChild(s);
-}
-
-function cardHtml(p){
-  const profileUrl='personality-view.html?id='+encodeURIComponent(p.id);
-  const qr='https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=12&data='+encodeURIComponent(location.origin+location.pathname.replace(/[^/]+$/,'')+profileUrl);
-  return `<article class="service-card" style="position:relative"><div style="height:190px;border-radius:12px;background:#eef5fa;overflow:hidden;margin:-3px -3px 14px">${p.photo_url?`<img src="${esc(p.photo_url)}" alt="${esc(p.name)}" loading="lazy" style="width:100%;height:100%;object-fit:cover">`:'<div style="height:100%;display:grid;place-items:center;font-size:55px">🏅</div>'}</div><b>${esc(p.name)}</b><small>${esc(p.field||'कुर्डूवाडीशी संबंधित व्यक्तिमत्त्व')}${p.position?' • '+esc(p.position):''}</small><p style="font-size:12px;color:#667e92;line-height:1.6">${esc((p.major_work||p.achievements||p.social_contribution||'प्रेरणादायी कामगिरी आणि योगदान.').slice(0,180))}</p><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><a class="primary-btn" href="${profileUrl}">Profile पहा →</a><a class="outline-btn" href="${qr}" target="_blank" rel="noopener">📱 QR</a></div>${p.reference_url?`<a class="text-btn" href="${esc(p.reference_url)}" target="_blank" rel="noopener">अधिक माहिती →</a>`:''}</article>`;
-}
-
-(async()=>{
-  if(!db){grid.innerHTML='<div class="empty">Supabase connection उपलब्ध नाही.</div>';return;}
-  const {data,error}=await db.from('personalities').select('*').eq('status','approved').order('created_at',{ascending:false});
-  if(error){console.error(error);grid.innerHTML='<div class="empty">माहिती लोड करताना अडचण आली.</div>';return;}
-  if(!data?.length){grid.innerHTML='<div class="empty">अजून व्यक्तिमत्त्वे प्रकाशित झालेली नाहीत.</div>';return;}
-  const head=document.querySelector('.pride-head');
-  if(head){
-    addFilterStyles();
-    const filter=document.createElement('div');filter.className='personality-category-filter';filter.setAttribute('aria-label','व्यक्तिमत्त्वांचे क्षेत्र निवडा');
-    filter.innerHTML=PERSONALITY_CATEGORIES.map(([key,label],i)=>`<button type="button" class="pc-filter${i===0?' active':''}" data-category="${key}">${label}</button>`).join('');
-    head.insertAdjacentElement('afterend',filter);
-    filter.addEventListener('click',e=>{const btn=e.target.closest('.pc-filter');if(!btn)return;filter.querySelectorAll('.pc-filter').forEach(x=>x.classList.remove('active'));btn.classList.add('active');const key=btn.dataset.category;const rows=key==='all'?data:data.filter(p=>categoryKey(p.field)===key);grid.innerHTML=rows.length?rows.map(cardHtml).join(''):`<div class="content-card" style="grid-column:1/-1;text-align:center;padding:28px">या क्षेत्रातील व्यक्तिमत्त्वांची माहिती लवकरच जोडली जाईल.</div>`;});
-  }
-  grid.innerHTML=data.map(cardHtml).join('');
-})();
+const PERSONALITY_CATEGORIES=[['all','✨ सर्व'],['admin','🏛️ प्रशासकीय सेवा'],['engineering','⚙️ अभियांत्रिकी व तंत्रज्ञान'],['arts','🎭 कला व संस्कृती'],['law','⚖️ न्याय व विधी'],['health','🏥 वैद्यकीय व आरोग्यसेवा'],['agri','🌾 कृषी व कृषीउद्योजकता'],['police','👮 पोलीस व संरक्षण सेवा'],['education','🎓 शिक्षण व संशोधन'],['business','💼 व्यवसाय व उद्योग'],['sports','🏅 क्रीडा'],['social','🤝 सामाजिक कार्य व पत्रकारिता'],['politics','🏛️ राजकीय व लोकसेवा']];
+function categoryKey(field=''){const s=String(field).toLowerCase().trim();if(/प्रशास|administr|collector|tax|government service|शासकीय/.test(s))return'admin';if(/अभियांत्र|engineer|technolog|technology|it |software|computer|तंत्रज्ञान/.test(s))return'engineering';if(/कला|संस्कृ|artist|actor|साहित्य|संगीत|culture/.test(s))return'arts';if(/न्याय|विधी|law|lawyer|advocate|वकील|न्यायाधीश/.test(s))return'law';if(/वैद्यकीय|आरोग्य|medical|doctor|health|hospital|physician|nurse|डॉक्टर/.test(s))return'health';if(/कृषी|शेतकरी|agri|farmer|farming|कृषीउद्योज|agro/.test(s))return'agri';if(/पोलीस|police|army|military|defence|संरक्षण|लष्कर/.test(s))return'police';if(/शिक्षण|teacher|professor|education|research|संशोधन|प्राध्यापक|शिक्षक/.test(s))return'education';if(/व्यवसाय|उद्योग|business|industrial|entrepreneur|उद्योजक|व्यापारी/.test(s))return'business';if(/क्रीडा|sport|खेळ|athlete|player/.test(s))return'sports';if(/सामाजिक|पत्रकार|social|journal|media|समाजसेवा/.test(s))return'social';if(/राजकीय|लोकसेवा|politic|mla|mp|आमदार|खासदार|नगराध्यक्ष/.test(s))return'politics';return'other'}
+function addFilterStyles(){if(document.getElementById('personalityFilterStyles'))return;const s=document.createElement('style');s.id='personalityFilterStyles';s.textContent=`.personality-category-filter{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 14px;margin:-4px 0 18px;scrollbar-width:none}.personality-category-filter::-webkit-scrollbar{display:none}.pc-filter{flex:0 0 auto;border:1px solid #d8e1ee;background:#fff;color:#244a87;border-radius:999px;padding:9px 13px;font:600 13px/1.2 inherit;cursor:pointer;box-shadow:0 3px 10px rgba(25,55,95,.06)}.pc-filter.active{background:#244a87;color:#fff;border-color:#244a87}@media(max-width:600px){.pc-filter{font-size:12px;padding:8px 11px}}`;document.head.appendChild(s)}
+function cardHtml(p){const profileUrl='personality-view.html?id='+encodeURIComponent(p.id),qrUrl='personality-qr.html?id='+encodeURIComponent(p.id);return `<article class="service-card" style="position:relative"><div style="height:190px;border-radius:12px;background:#eef5fa;overflow:hidden;margin:-3px -3px 14px">${p.photo_url?`<img src="${esc(p.photo_url)}" alt="${esc(p.name)}" loading="lazy" style="width:100%;height:100%;object-fit:cover">`:'<div style="height:100%;display:grid;place-items:center;font-size:55px">🏅</div>'}</div><b>${esc(p.name)}</b><small>${esc(p.field||'कुर्डूवाडीशी संबंधित व्यक्तिमत्त्व')}${p.position?' • '+esc(p.position):''}</small><p style="font-size:12px;color:#667e92;line-height:1.6">${esc((p.major_work||p.achievements||p.social_contribution||'प्रेरणादायी कामगिरी आणि योगदान.').slice(0,180))}</p><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><a class="primary-btn" href="${profileUrl}">Profile पहा →</a><a class="outline-btn" href="${qrUrl}">📱 QR</a></div>${p.reference_url?`<a class="text-btn" href="${esc(p.reference_url)}" target="_blank" rel="noopener">अधिक माहिती →</a>`:''}</article>`}
+(async()=>{if(!db){grid.innerHTML='<div class="empty">Supabase connection उपलब्ध नाही.</div>';return}const {data,error}=await db.from('personalities').select('*').eq('status','approved').order('created_at',{ascending:false});if(error){console.error(error);grid.innerHTML='<div class="empty">माहिती लोड करताना अडचण आली.</div>';return}if(!data?.length){grid.innerHTML='<div class="empty">अजून व्यक्तिमत्त्वे प्रकाशित झालेली नाहीत.</div>';return}const head=document.querySelector('.pride-head');if(head){addFilterStyles();const filter=document.createElement('div');filter.className='personality-category-filter';filter.setAttribute('aria-label','व्यक्तिमत्त्वांचे क्षेत्र निवडा');filter.innerHTML=PERSONALITY_CATEGORIES.map(([key,label],i)=>`<button type="button" class="pc-filter${i===0?' active':''}" data-category="${key}">${label}</button>`).join('');head.insertAdjacentElement('afterend',filter);filter.addEventListener('click',e=>{const btn=e.target.closest('.pc-filter');if(!btn)return;filter.querySelectorAll('.pc-filter').forEach(x=>x.classList.remove('active'));btn.classList.add('active');const key=btn.dataset.category;const rows=key==='all'?data:data.filter(p=>categoryKey(p.field)===key);grid.innerHTML=rows.length?rows.map(cardHtml).join(''):`<div class="content-card" style="grid-column:1/-1;text-align:center;padding:28px">या क्षेत्रातील व्यक्तिमत्त्वांची माहिती लवकरच जोडली जाईल.</div>`})}grid.innerHTML=data.map(cardHtml).join('')})();
