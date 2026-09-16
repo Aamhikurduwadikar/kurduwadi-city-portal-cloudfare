@@ -1,4 +1,4 @@
-/* Homepage: load approved + published Kurduwadi pride personalities. */
+/* Homepage: load approved Kurduwadi pride personalities. */
 (function(){
   const cfg=window.KURDUWADI_CONFIG||{};
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
@@ -7,7 +7,7 @@
     const host=document.getElementById('homePride');
     if(!host||!cfg.SUPABASE_URL||!cfg.SUPABASE_ANON_KEY)return;
     try{
-      const params=new URLSearchParams({select:'id,name,photo_url,field,position,major_work,achievements,social_contribution,created_at',status:'eq.approved',published:'eq.true',order:'created_at.desc',limit:'6'});
+      const params=new URLSearchParams({select:'id,name,photo_url,field,position,major_work,achievements,social_contribution,created_at',status:'eq.approved',order:'created_at.desc',limit:'6'});
       const r=await fetch(cfg.SUPABASE_URL.replace(/\/$/,'')+'/rest/v1/personalities?'+params,{headers:{apikey:cfg.SUPABASE_ANON_KEY,Authorization:'Bearer '+cfg.SUPABASE_ANON_KEY}});
       if(!r.ok)throw new Error('HTTP '+r.status);
       const rows=await r.json();
