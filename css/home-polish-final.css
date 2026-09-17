@@ -1,5 +1,7 @@
 /* FINAL HOMEPAGE POLISH */
 .premium-home main{width:100%;overflow:hidden}.premium-home .section{width:min(1280px,calc(100% - 40px));margin-inline:auto}.premium-home .hero{width:100%;box-sizing:border-box}.premium-home .section-head{display:flex;justify-content:space-between;align-items:end;gap:20px}.premium-home .text-btn{white-space:nowrap}.premium-home .home-photo-section,.premium-home .home-pride-section,.premium-home .updates-section,.premium-home .community-premium{scroll-margin-top:80px}.premium-home .home-cta{width:min(1180px,calc(100% - 40px));margin-inline:auto}.premium-home footer{width:100%;box-sizing:border-box}
+/* Main homepage: keep admin access separate at /admin/ and out of the public UI. */
+.premium-home a[href*="admin"]{display:none!important}
 /* Live gallery items use .home-gallery-item; keep the grid and media sizing independent of legacy class names. */
 .premium-home .home-gallery-preview{display:grid;grid-template-columns:1.25fr .9fr .9fr;grid-auto-rows:180px;gap:13px;min-height:0}
 .premium-home .home-gallery-item{position:relative;display:block;overflow:hidden;min-width:0;min-height:0;border-radius:22px;background:#e9e4dc;box-shadow:0 14px 35px rgba(25,39,53,.1);text-decoration:none}
