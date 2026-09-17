@@ -2,11 +2,14 @@
 (function(){
   'use strict';
   function start(){
+    if(location.pathname.toLowerCase().includes('gallery-submit')){
+      var s=document.createElement('script');s.src='js/gallery-upload-fix.js?v=20260920';document.head.appendChild(s);
+    }
     var cfg=window.KURDUWADI_CONFIG||{};
     if(!cfg.SUPABASE_URL||!cfg.SUPABASE_ANON_KEY)return;
     var base=String(cfg.SUPABASE_URL).replace(/\/$/,''), key=cfg.SUPABASE_ANON_KEY;
     function api(path){return fetch(base+path,{headers:{apikey:key,Authorization:'Bearer '+key}}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})}
-    function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+    function esc(v){return String(v==null?'':v).replace(/[&<>\"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]})}
     function mediaUrl(v){var u=String(v||'').trim();if(u&&!/^https?:\/\//i.test(u))u=base+'/storage/v1/object/public/'+(cfg.STORAGE_BUCKET||'community-images')+'/'+u.replace(/^\/+/, '');return u}
     api('/rest/v1/site_settings?select=setting_value&setting_key=eq.ganpati_2026_enabled&limit=1').then(function(rows){
       var enabled=rows&&rows[0]&&String(rows[0].setting_value).toLowerCase()==='true';
