@@ -5,7 +5,8 @@
     ['/city-info.html','🏛️','इतिहास'],
     ['/directory.html','👥','निर्देशिका'],
     ['/schemes.html','💡','विकास'],
-    ['/events.html','📅','कार्यक्रम']
+    ['/events.html','📅','कार्यक्रम'],
+    ['/ganpati-2026.html','🙏','गणेशोत्सव']
   ];
   function init(){
     if(document.querySelector('.mobile-bottom-nav')||location.pathname.includes('/admin/'))return;
