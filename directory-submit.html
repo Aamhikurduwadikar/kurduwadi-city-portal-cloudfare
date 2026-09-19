@@ -1,1 +1,40 @@
-<!doctype html><html lang="mr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Directory माहिती जोडा | Kurduwadi</title><link rel="stylesheet" href="css/style.css"></head><body class="form-page"><header class="header"><a class="brand" href="index.html"><div class="brand-mark">K</div><div><strong>कुर्डुवाडी</strong><small>CITIZEN DIRECTORY</small></div></a><a class="outline-btn" href="directory.html">← Directory</a></header><main class="form-wrap"><section class="form-intro"><span class="section-label">DIRECTORY SUBMISSION</span><h1>Directory मध्ये माहिती जोडा</h1><p>तुमची माहिती Admin पडताळणीनंतर Directory मध्ये प्रकाशित केली जाईल.</p></section><section class="card"><form id="directoryForm"><label>नाव / व्यवसायाचे नाव *<input id="business_name" required maxlength="120" placeholder="उदा. अमोल किराणा / अमोल पाटील"></label><label>वर्ग / व्यवसाय *<select id="category" required><option value="">वर्ग निवडा</option><option value="नोकरी / नोकदार">👔 नोकरी / नोकदार</option><option value="व्यवसाय / दुकान">🏪 व्यवसाय / दुकान</option><option value="शेती / शेतकरी">🌾 शेती / शेतकरी</option><option value="कुशल कामगार / कारागीर">🔧 कुशल कामगार / कारागीर</option><option value="शिक्षण / शिक्षक">🎓 शिक्षण / शिक्षक</option><option value="विद्यार्थी">📚 विद्यार्थी</option><option value="सेवा / मार्गदर्शन">🤝 सेवा / मार्गदर्शन</option><option value="इतर">👤 इतर</option></select></label><label>मोबाईल क्रमांक<input id="contact_number" maxlength="20" placeholder="WhatsApp / मोबाईल नंबर"></label><label>ई-मेल<input id="email" type="email" maxlength="160" placeholder="उदा. example@gmail.com"></label><label>पत्ता<input id="address" maxlength="300" placeholder="कुर्डुवाडी, ..."></label><label>वेळ<input id="timings" maxlength="120" placeholder="उदा. सकाळी 9 ते रात्री 9"></label><label>Google Maps Link (ऐच्छिक)<input id="google_maps_link" type="url" placeholder="https://maps.google.com/..."></label><label><input id="is_public" type="checkbox" checked> माझी माहिती Directory वर सार्वजनिक करण्यास माझी संमती आहे.</label><button class="primary-btn" type="submit">📤 माहिती Submit करा</button><p id="msg" class="muted"></p></form></section></main><script src="js/config.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/directory-submit.js"></script><style>.card select#category{width:100%;min-height:52px;padding:0 16px;border:1px solid #d9dfe4;border-radius:14px;background:#fff;color:#263b4d;font:inherit;font-size:16px;outline:none}.card select#category:focus{border-color:#c78645;box-shadow:0 0 0 4px rgba(199,134,69,.12)}</style></body></html>
+<!doctype html>
+<html lang="mr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="कुर्डूवाडी व्यवसायाची माहिती आणि व्यवसायाची कहाणी नोंदवा.">
+<title>व्यवसायाची माहिती जोडा | आम्ही कुर्डूवाडीकर</title>
+<link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/directory-premium.css">
+<style>.story-form{display:grid;grid-template-columns:1fr 1fr;gap:14px}.story-form label{display:block}.story-form .full{grid-column:1/-1}.story-form textarea{width:100%;min-height:110px;box-sizing:border-box;padding:13px 15px;border:1px solid #d9dfe4;border-radius:14px;font:inherit;resize:vertical}.story-form input,.story-form select{width:100%;box-sizing:border-box;min-height:50px;padding:0 15px;border:1px solid #d9dfe4;border-radius:14px;background:#fff;font:inherit}.story-upload{grid-column:1/-1;padding:16px;border:2px dashed #ccd7e3;border-radius:16px;background:#f8fbff}.story-note{color:#667085;font-size:13px}.story-preview{max-width:180px;max-height:140px;border-radius:12px;object-fit:cover;display:none;margin-top:8px}@media(max-width:720px){.story-form{grid-template-columns:1fr}.story-form .full{grid-column:auto}.story-upload{grid-column:auto}}</style>
+</head>
+<body class="form-page">
+<header class="header"><a class="brand" href="index.html"><div class="brand-mark">K</div><div><strong>कुर्डूवाडी</strong><small>BUSINESS DIRECTORY</small></div></a><a class="outline-btn" href="directory.html">← Directory</a></header>
+<main class="form-wrap">
+<section class="form-intro"><span class="section-label">BUSINESS STORY</span><h1>आपल्या व्यवसायाची कहाणी नोंदवा</h1><p>फक्त Directory मध्ये नाव नोंदवण्याऐवजी आपल्या व्यवसायाची सुरुवात, इतिहास, प्रेरणा आणि कर्तृत्वही जतन करा. माहिती Admin पडताळणीनंतर प्रकाशित केली जाईल.</p></section>
+<section class="card"><form id="directoryForm" class="story-form">
+<label>व्यवसायाचे नाव *<input id="business_name" required maxlength="120" placeholder="उदा. अमोल किराणा"></label>
+<label>वर्ग / व्यवसाय *<select id="category" required><option value="">वर्ग निवडा</option><option value="व्यवसाय / दुकान">🏪 व्यवसाय / दुकान</option><option value="नोकरी / नोकदार">👔 नोकरी / नोकदार</option><option value="शेती / शेतकरी">🌾 शेती / शेतकरी</option><option value="कुशल कामगार / कारागीर">🔧 कुशल कामगार / कारागीर</option><option value="शिक्षण / शिक्षक">🎓 शिक्षण / शिक्षक</option><option value="सेवा / मार्गदर्शन">🤝 सेवा / मार्गदर्शन</option><option value="इतर">👤 इतर</option></select></label>
+<label>मालक / संस्थापकाचे नाव<input id="owner_name" maxlength="120" placeholder="उदा. अमोल पाटील"></label>
+<label>व्यवसायाची सुरुवात कोणत्या वर्षी?<input id="founded_year" type="number" min="1800" max="2100" placeholder="उदा. 1998"></label>
+<label>मोबाईल / WhatsApp *<input id="contact_number" required maxlength="20" placeholder="मोबाईल नंबर"></label>
+<label>ई-मेल<input id="email" type="email" maxlength="160" placeholder="example@gmail.com"></label>
+<label class="full">पत्ता<input id="address" maxlength="300" placeholder="कुर्डूवाडी, ..."></label>
+<label>व्यवसायाची वेळ<input id="timings" maxlength="120" placeholder="सकाळी 9 ते रात्री 9"></label>
+<label>Google Maps Link<input id="google_maps_link" type="url" placeholder="https://maps.google.com/..."></label>
+<label class="full">काय सेवा / उत्पादने मिळतात?<textarea id="products_services" placeholder="आपल्या व्यवसायातून कोणत्या सेवा किंवा उत्पादने मिळतात?"></textarea></label>
+<label class="full">📖 व्यवसायाची सुरुवात कशी झाली?<textarea id="origin_story" placeholder="व्यवसाय सुरू करण्यामागची कथा लिहा..."></textarea></label>
+<label class="full">🕰️ व्यवसायाचा इतिहास<textarea id="business_history" placeholder="व्यवसायाची वाटचाल, बदल, विस्तार, जुने दिवस..."></textarea></label>
+<label>💡 व्यवसाय सुरू करण्याची प्रेरणा<textarea id="inspiration" placeholder="प्रेरणा कुठून मिळाली?"></textarea></label>
+<label>👨‍👩‍👧 कुटुंबाचा सहभाग<textarea id="family_story" placeholder="कुटुंबातील कोणाचा सहभाग आहे?"></textarea></label>
+<label>🏆 विशेष कर्तृत्व / उपलब्धी<textarea id="achievements" placeholder="पुरस्कार, उल्लेखनीय कामगिरी, विशेष उपलब्धी..."></textarea></label>
+<label>🤝 समाजासाठी योगदान<textarea id="community_contribution" placeholder="समाजोपयोगी किंवा स्थानिक योगदान..."></textarea></label>
+<label>🚀 भविष्यातील स्वप्न<textarea id="future_vision" placeholder="पुढील काळात व्यवसाय कुठे घेऊन जायचा आहे?"></textarea></label>
+<label>Website<input id="website" type="url" placeholder="https://..."></label>
+<label>Instagram Link<input id="instagram" type="url" placeholder="https://instagram.com/..."></label>
+<label>Facebook Link<input id="facebook" type="url" placeholder="https://facebook.com/..."></label>
+<div class="story-upload"><b>📸 व्यवसायाचा फोटो</b><p class="story-note">URL टाकण्याची गरज नाही. फोटो थेट निवडा; तो Supabase Storage मध्ये upload होऊन माहितीबरोबर जोडला जाईल.</p><input id="business_photo" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><img id="photoPreview" class="story-preview" alt="फोटो preview"></div>
+<label class="full"><input id="is_public" type="checkbox" checked> माझ्या व्यवसायाची माहिती Directory आणि Business Story वर सार्वजनिक करण्यास माझी संमती आहे.</label>
+<button class="primary-btn full" type="submit">📤 व्यवसायाची माहिती Submit करा</button><p id="msg" class="muted full"></p>
+</form></section></main>
+<script src="js/config.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/directory-submit.js?v=20260920-business-story"></script>
+</body></html>
