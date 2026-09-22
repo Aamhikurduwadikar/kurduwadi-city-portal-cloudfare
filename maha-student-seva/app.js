@@ -1,0 +1,1 @@
+function filterCards(){const q=(document.getElementById('search').value||'').trim().toLowerCase();document.querySelectorAll('#cards article').forEach(card=>{card.style.display=!q||card.innerText.toLowerCase().includes(q)?'block':'none'})}document.getElementById('search').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();filterCards()}});
